@@ -1,7 +1,6 @@
 import 'package:expence_palnner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-
-import 'models/transaction.dart';
+import '../models/transaction.dart';
 import 'new_transaction.dart';
 
 class UserTransactions extends StatefulWidget {
@@ -27,7 +26,8 @@ class _UserTransactionsState extends State<UserTransactions> {
         id: DateTime.now().toString(),
         title: txTitle,
         amount: txAmount,
-        date: DateTime.now());
+        date: DateTime.now(),
+    );
     setState(() {
       _userTransactions.add(newTx);
     });

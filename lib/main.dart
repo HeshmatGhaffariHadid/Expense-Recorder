@@ -1,8 +1,7 @@
-import 'package:expence_palnner/new_transaction.dart';
-import 'package:expence_palnner/user_transactions.dart';
+import 'package:expence_palnner/widgets/new_transaction.dart';
+import 'package:expence_palnner/widgets/user_transactions.dart';
 import 'package:expence_palnner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-
 
 void main() => runApp(MyApp());
 
@@ -16,7 +15,6 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-
   // String? titleInput;
   // String? amountInput;
 
@@ -27,19 +25,23 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense App'),
+        title: const Text('Expense App'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
+        ],
         backgroundColor: Colors.purple,
       ),
-      body: ListView(
-        children:[ Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Card(
               color: Colors.purple,
               child: Container(
                 width: double.infinity,
-                child: Text(
+                child: const Text(
                   'Chart',
                   style: TextStyle(
                     fontSize: 18,
@@ -48,11 +50,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            UserTransactions(),
+            const UserTransactions(),
           ],
         ),
-    ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){},),
     );
   }
 }

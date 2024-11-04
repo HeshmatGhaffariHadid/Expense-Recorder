@@ -1,12 +1,17 @@
-import 'package:expence_palnner/widgets/user_transactions.dart';
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function addNewTx;
-final titleController = TextEditingController();
-final amountController = TextEditingController();
 
 NewTransaction(this.addNewTx);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+final titleController = TextEditingController();
+final amountController = TextEditingController();
 
 void submitData(){
   final enteredTitle = titleController.text;
@@ -15,11 +20,11 @@ void submitData(){
   if(enteredTitle.isEmpty || enteredAmount <= 0){
     return;
   }
-  addNewTx(
+  widget.addNewTx(
     enteredTitle,
     enteredAmount);
+  Navigator.of(context).pop();
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +46,10 @@ void submitData(){
               onSubmitted: (_) => submitData(),
             ),
             TextButton(
+              onPressed: submitData,
               child: const Text('Add Transaction',style: TextStyle(
                   color: Colors.purple),),
-              onPressed: submitData,
             ),
-
           ],
         ),
       ),

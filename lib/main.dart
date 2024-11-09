@@ -1,6 +1,7 @@
 import 'package:expence_palnner/widgets/new_transaction.dart';
 import 'package:expence_palnner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'chart.dart';
 import 'models/transaction.dart';
 
 void main() => runApp(MyApp());
@@ -36,19 +37,15 @@ class _HomePageState extends State<HomePage> {
     //   amount: 40,
     //   date: DateTime.now(),
     // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Watermelon',
-    //   amount: 21.97,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'Apple',
-    //   amount: 27.74,
-    //   date: DateTime.now(),
-    // ),
   ];
+
+   List<Transaction> get _recentTransactions{
+     return  _userTransactions.where((tx){
+       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7),
+       ),
+       );
+     }).toList();
+}
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -95,19 +92,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Card(
-              color: Theme.of(context).primaryColor,
-              child: Container(
-                width: double.infinity,
-                child: const Text(
-                  'Chart',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),

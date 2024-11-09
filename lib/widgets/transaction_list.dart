@@ -10,7 +10,15 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(itemBuilder: (ctx, index) {
+      child: transaction.isEmpty ? Column(
+        children: [
+          Text('No transactions added yet!',style: TextStyle(fontFamily: 'OpenSans',fontSize: 18,fontWeight: FontWeight.bold)),
+          SizedBox(height: 10),
+          Container(
+            height: 200,
+              child: Image.asset('assets/images/waiting.png',fit: BoxFit.cover)),
+        ],
+      ) : ListView.builder(itemBuilder: (ctx, index) {
         return Card(
           child: Row(
             children: [
@@ -19,14 +27,15 @@ class TransactionList extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.purple, width: 2),
+                  border: Border.all(color: Theme.of(context).primaryColor, width: 2),
                 ),
                 child: Text(
                   '\$${transaction[index].amount.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontSize: 20,
+                    fontFamily: 'OpenSans',
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple.shade600,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
@@ -35,10 +44,7 @@ class TransactionList extends StatelessWidget {
                 children: [
                   Text(
                     transaction[index].title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge
                   ),
                   Text(
                     //Formatting the date

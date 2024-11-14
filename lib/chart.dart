@@ -1,6 +1,6 @@
+import 'package:expence_palnner/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'models/transaction.dart';
 
 class Chart extends StatelessWidget {
@@ -14,7 +14,6 @@ class Chart extends StatelessWidget {
         Duration(days: index),
       );
       var totalSum = 0.0;
-
       for (var i = 0; i < recentTransaction.length; i++) {
         if (recentTransaction[i].date.day == weekDay.day &&
             recentTransaction[i].date.month == weekDay.month &&
@@ -29,14 +28,25 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get totalSpending {
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + (item['amount'] as double);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: groupedTransactionValues.map((data){
-          return Text('${data['day']}: ${data['amount']}');
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: groupedTransactionValues.map((data) {
+          return ChartBar(
+              data['day'].toString(),
+              data['amount'] as double,
+              (data['amount'] as double) / totalSpending,
+          );
         }).toList(),
       ),
     );

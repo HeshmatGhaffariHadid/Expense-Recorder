@@ -31,12 +31,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Banana',
-    //   amount: 40,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'Banana',
+      amount: 40,
+      date: DateTime.now(),
+    ),
   ];
 
    List<Transaction> get _recentTransactions{

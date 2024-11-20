@@ -9,9 +9,10 @@ final double spendingPctOfTotal;
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('\$ ${spendingAmount.toStringAsFixed(0)}'),
-        SizedBox(height: 4),
-        Container(
+        FittedBox(
+            child: Text('\$ ${spendingAmount.toStringAsFixed(0)}')),
+        const SizedBox(height: 4),
+        SizedBox(
           height: 60,
           width: 10,
           child: Stack(
@@ -19,7 +20,7 @@ final double spendingPctOfTotal;
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 1.0),
-                  color: Color.fromRGBO(220, 220, 220, 1),
+                  color: const Color.fromRGBO(220, 220, 220, 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
@@ -33,7 +34,7 @@ final double spendingPctOfTotal;
 
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(label)
       ],
     );

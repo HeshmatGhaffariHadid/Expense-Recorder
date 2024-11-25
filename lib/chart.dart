@@ -8,7 +8,7 @@ class Chart extends StatelessWidget {
 
   Chart(this.recentTransaction);
 
-  List<Map<String, Object>> get groupedTransactionValues {
+  List<Map<String, dynamic>> get groupedTransactionValues {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
@@ -25,7 +25,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum
       };
-    });
+    }).reversed.toList();
   }
 
   double get totalSpending {
@@ -44,17 +44,19 @@ class Chart extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionValues.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                  data['day'].toString(),
-                  data['amount'] as double,
-                  (data['amount'] as double) / totalSpending,
-              ),
-            );
+            return Expanded(
+                child: ChartBar(
+              data['day'].toString(),
+              data['amount'] as double,
+              (totalSpending == 0 ? 0 : (data["amount"] as double) / totalSpending),
+            ));
           }).toList(),
         ),
       ),
     );
+
+
+
+
   }
 }

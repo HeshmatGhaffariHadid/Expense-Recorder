@@ -1,5 +1,8 @@
+import 'package:expence_palnner/adaptive_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTx;
@@ -16,16 +19,16 @@ class _NewTransactionState extends State<NewTransaction> {
   DateTime? _selectedDate;
 
   void _submitData() {
-    if(_amountController.text.isEmpty){
-    return;
-  }
+    if (_amountController.text.isEmpty) {
+      return;
+    }
     final enteredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
-    widget.addNewTx(enteredTitle, enteredAmount,_selectedDate);
+    widget.addNewTx(enteredTitle, enteredAmount, _selectedDate);
     Navigator.of(context).pop();
   }
 
@@ -37,7 +40,9 @@ class _NewTransactionState extends State<NewTransaction> {
             lastDate: DateTime.now())
         .then((pickedDate) {
       if (pickedDate == null) {
-        return;
+        setState(() {
+          _selectedDate = DateTime.now();
+        });
       } else {
         setState(() {
           _selectedDate = pickedDate;
@@ -48,9 +53,13 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.only(
+            top: 10,
+            right: 10,
+            left: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -74,15 +83,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         ? 'No Date Chosen!'
                         : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
                   ),
-                  TextButton(
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      ' Choose Date',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  AdaptiveButton('Choose Date', _presentDatePicker)
                 ],
               ),
             ),
